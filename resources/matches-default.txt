@@ -12,4 +12,5 @@ Gurnnink
 REMD
 dabel
 devil
-salad.*emperor.*thore
+salad.*emperor.*throne
+emperor.*salad.*throne

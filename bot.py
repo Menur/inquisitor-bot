@@ -9,10 +9,10 @@ from dotenv import load_dotenv
 import dice_lib
 
 load_dotenv()
-TOKEN = '<token>' #os.getenv()
+TOKEN = dice_lib.read_all_lines('key.conf')[0] #os.getenv()
 class Ratio:
-    value=10
-    send=False
+    value=100
+    send=True
     servers=[]
 
 client = discord.Client()
@@ -50,16 +50,16 @@ async def on_message(message):
             await message.channel.send('\n'.join(dice_lib.get_command(message.content)))
         return
 
-    #regex="(hereti[ck][a]?|heres[ye]|kac[ií][rř]|rouh[áa][ncč][ií]|herez[ií]|rouha[t]|ponny|magic|magie|demon|Gurnnink|REMD|[@][&!](753944326823739413|622701434713931776|320280460879986688)|dabel|devil)"
     isHeresy = re.search(dice_lib.load_matches(), message.content, re.IGNORECASE)
     if option >= ratio.value:
         return
     if isHeresy and ratio.send:
         response = random.choice(heresyQuotes)
         await message.reply(response)
+        return
 
-    if re.search("(Papež Dice I|Dice Roll Boom)") and ratio.send:
-        response = random.choice(diceReact)
+    if re.search(dice_lib.load_general_matches('dice'), message.content, re.IGNORECASE) and ratio.send:
+        response = random.choice(dice_lib.get_quotes('dice'))
         await message.reply(response)
 
 

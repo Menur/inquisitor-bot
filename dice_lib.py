@@ -7,7 +7,7 @@ def read_all_lines(filename):
 
 def add_line(file_name, line):
     with open(file_name, 'a', encoding="utf-8") as fh:
-        fh.write(quote+'\n')
+        fh.write(line+'\n')
 
 
 def load_matches():
@@ -18,8 +18,19 @@ def load_matches():
     p='|'.join(players) # <@!622701434713931776>
     r='|'.join(roles) # <@&753944326823739413>
     d='|'.join(default)
+    re= f'([<][@]([!]({p})|[&]({r}))[>])|({d})'
+    #Emperor is fucking salad on the throne !!!!
+    return re
 
-    return f'([<][@]([!]({p})|[&]({r}))[>])|({d}))'
+def load_general_matches(group):
+    default=read_all_lines(f'resources/matches-{group}.txt')
+    d='|'.join(default)
+
+    re=  f'({d})'
+    return re
+
+def get_quotes(group):
+    return read_all_lines(f'resources/quotes-{group}.txt')
 
 def get_command(command):
     operation,optype,group =command.split(' ', 3)
@@ -47,7 +58,6 @@ def add_command(command):
     optype = get_op_name(optype)
     if optype == False:
         return
-
 
     resource=f'resources/{optype}-{group}.txt'
     add_line(resource, value)
