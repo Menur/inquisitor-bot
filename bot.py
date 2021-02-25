@@ -10,7 +10,7 @@ import dice_lib
 
 load_dotenv()
 TOKEN = dice_lib.read_all_lines('configs/key.conf')[0]
-TOKEN = dice_lib.read_all_lines('configs/admin.conf')[0]
+bot_admin = dice_lib.read_all_lines('configs/admin.conf')[0]
 class Ratio:
     value=100
     send=True
