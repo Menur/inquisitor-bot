@@ -36,8 +36,10 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if f'{message.channel.type}' == 'private' and bot_admin == message.author.id:
-        if message.content.startswith('set ratio '):
+    if f'{message.channel.type}' == 'private':
+        if bot_admin != f'{message.author.id}':
+            await message.channel.send(f'You\'re not authorized to speak with me privately.')
+        elif message.content.startswith('set ratio '):
             ratio.value=int(message.content.split(' ')[2])
             await message.channel.send(f'ratio {ratio.value}')
         elif message.content.startswith('get ratio'):
@@ -46,7 +48,6 @@ async def on_message(message):
             await message.channel.send('\n'.join(heresyQuotes))
         elif message.content.startswith('add '):
             dice_lib.add_command(message.content)
-
         elif message.content.startswith('get '):
             await message.channel.send('\n'.join(dice_lib.get_command(message.content)))
         return
