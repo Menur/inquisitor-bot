@@ -9,7 +9,8 @@ from dotenv import load_dotenv
 import dice_lib
 
 load_dotenv()
-TOKEN = dice_lib.read_all_lines('key.conf')[0] #os.getenv()
+TOKEN = dice_lib.read_all_lines('configs/key.conf')[0]
+TOKEN = dice_lib.read_all_lines('configs/admin.conf')[0]
 class Ratio:
     value=100
     send=True
@@ -35,7 +36,7 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if f'{message.channel.type}' == 'private':
+    if f'{message.channel.type}' == 'private' and bot_admin == message.author.id:
         if message.content.startswith('set ratio '):
             ratio.value=int(message.content.split(' ')[2])
             await message.channel.send(f'ratio {ratio.value}')
